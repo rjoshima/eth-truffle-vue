@@ -1,0 +1,12 @@
+{
+  "name": "eth-vue-truffle",
+  "version": "0.0.1",
+  "dependencies": {
+    
+  },
+  "scripts": {
+    "backend": "cd backend; node server",
+    "frontend": "cd frontend; npm run dev",
+    "eth": "cd backend/eth; truffle develop"
+  }
+}
