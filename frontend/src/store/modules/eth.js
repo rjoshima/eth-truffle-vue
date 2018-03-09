@@ -144,7 +144,8 @@ const actions = {
   },
   changeWelcomeText({dispatch}, data) {
     BaseContract.methods.setWelcomeText(data.text)
-      .send({from: state.clientAccount})
+    // Contract has problem determining right gas price. I think its because it cant adjust after arbitrary string. To avoid this maybe convert to bytes.
+      .send({from: state.clientAccount, gas: 38593})
       .on('transactionHash', function (hash) {
         console.log("Event #transactionHash: " + hash)
       })

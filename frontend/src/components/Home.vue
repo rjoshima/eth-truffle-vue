@@ -12,7 +12,7 @@
 
         <b-form @submit="submitWelcomeText" @reset="onResetWelcomeText" v-if="show">
           <b-form-group id="groupWelcomeText"
-                        label="New welcome text"
+                        label=""
                         label-for="inputWelcomeText"
                         description="Set some new welcome text on this page">
             <b-form-input id="inputWelcomeText"
