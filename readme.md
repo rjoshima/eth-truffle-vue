@@ -12,9 +12,9 @@ For quik iteration over smart contracts and frontend connectors.
 
 # Getting started
 
-1. Open a terminal and start development eth RPC with "npm run eth".
-2. This will open av truffle console. Deploy the smart contract with the command "migrate".
-2. Open another terminal and start frontend development enviroment with "npm run frontend"
+1. Terminal -> ´´´npm run eth´´´. (Opens a Truffle console)
+2. In truffle console write -> ´´´migrate´´´. (Deploys contract to local Eth RPC).
+2. Open NEW terminal window. Write -> ´´´npm run frontend´´´ (Development frontend in Browser).
 
 Webpack will start you browser on URL http://localhost:8080/#/ and you should see the web application.
 
