@@ -27,7 +27,8 @@ const state = {
   welcomeText: "",
   isMetaMask: isMetaMask,
   animals: {},
-  animalList: []
+  animalList: [],
+  currentBlock: null
 }
 
 // getters
@@ -35,6 +36,7 @@ const getters = {
   isMetaMask: state => state.isMetaMask,
   clientAccount: state => state.clientAccount,
   welcomeText: state => state.welcomeText,
+  currentBlock: state => state.currentBlock,
   animals: state => state.animals,
   animalList: state => state.animalList
 }
@@ -42,10 +44,25 @@ const getters = {
 /* eslint-enable */
 // actions
 const actions = {
-  async start({dispatch}) {
+  async start({dispatch, commit}) {
     await dispatch('getCoinbase')
     dispatch('syncWelcomeText')
     dispatch('syncAnimalByOwner', {address: state.clientAccount})
+
+    // Create an event checker loop. Metamask does not support subscriptions yet. So we need to create our own subscription like service.
+    setInterval(() => {
+      myWeb3.eth.getBlockNumber()
+        .then((res) => {
+          if (state.currentBlock === null) {
+            commit('setCurrentBlock', {block: res})
+            return
+          }
+          if (res !== state.currentBlock) {
+            dispatch('watchAnimals', {fromBlock: res, toBlock: res})
+            commit('setCurrentBlock', {block: res})
+          }
+        })
+    }, 2000)
   },
   getCoinbase({commit}) {
     return new Promise(resolve => {
@@ -82,20 +99,22 @@ const actions = {
             dispatch('syncAnimal', {id: id})
           }
           commit('updateAnimalList', {list: ids})
-          dispatch('watchAnimals')
         }
       })
   },
-  watchAnimals({commit}, data) {
-    BaseContract.events.NewAnimal(
-      {
-        filter: {myIndexedParam: [20, 23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
-        fromBlock: 0
-      }, function (error, event) {
+  watchAnimals({dispatch}, data) {
+    BaseContract.getPastEvents('NewAnimal', {
+        fromBlock: data.fromBlock,
+        toBlock: data.toBlock
+      }, function (error, events) {
         if (error !== null) {
           console.error('watchAnimals ', error)
         } else {
-          console.log(event)
+          events.forEach((event) => {
+            if (event.event === "NewAnimal") {
+              dispatch('syncAnimal', {id: parseInt(event.returnValues.id)})
+            }
+          })
         }
       }
     )
@@ -147,6 +166,9 @@ const actions = {
 
 // mutations
 const mutations = {
+  setCurrentBlock(state, data) {
+    state.currentBlock = data.block
+  },
   setClientAccount(state, address) {
     state.clientAccount = address
   },
