@@ -27,3 +27,14 @@ After makeing changes to Solidity contracts, just run "migrate --reset" in the t
 - When "re-booting" the Ethereum RPC, remember to reset your metamask account transaction nounce. ![Metamask transaction nounce](http://storage7.static.itmages.com/i/18/0309/h_1520615869_8453611_ee83786505.png)
 - If your getting an error "cannot read address from ... ", run "migrate --reset" in the truffle console.
 - When makeing bigger adjustments to some Solidity code that is then reset through migration, if you haveing trouble with unexpected results. Deletes the contracts from ./backend/eth/build/contracts and do a "migrate --reset"*[]:
+
+# Stack
+
+- Truffle
+- web3/metamask
+- Express
+- Node
+- Webpack
+- Vue
+- Vuex
+- Bootstrap
