@@ -7,6 +7,7 @@
   "scripts": {
     "backend": "cd backend; node server",
     "frontend": "cd frontend; npm run dev",
-    "eth": "cd backend/eth; truffle develop"
+    "eth": "cd backend/eth; truffle develop",
+    "init": "cd backend; npm install;cd ../frontend; npm install"
   }
 }

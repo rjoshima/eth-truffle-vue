@@ -3,6 +3,10 @@
 
 For quik iteration over smart contracts and frontend connectors.
 
+# Install
+
+Run ´´´npm run init´´´
+
 # Develop
 
 ```npm run frontend``` intitiates webpack vue frontend
