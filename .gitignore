@@ -1,2 +1,3 @@
 .idea
-/frontend/src/app/contracts/
+/frontend/src/contracts/
+/backend/eth/build/
